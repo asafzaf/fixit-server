@@ -1,6 +1,7 @@
 {
   "domains": [
     {
+      "id": "100",
       "name": "Electric",
       "name_hebrew": "חשמל",
       "description": "Electricity",
@@ -35,6 +36,7 @@
       ]
     },
     {
+      "id": "200",
       "name": "Water",
       "name_hebrew": "מים",
       "description": "Water",
@@ -74,6 +76,7 @@
       ]
     },
     {
+      "id": "300",
       "name": "toilet",
       "name_hebrew": "שירותים",
       "description": "Toilet",
@@ -161,9 +164,14 @@
           "description": "broken roof"
         },
         {
-          "name": "broken air conditioner",
-          "name_hebrew": "מזגן שבור",
-          "description": "broken air conditioner"
+          "name": "broken ventana",
+          "name_hebrew": "פתח אוורור שבור",
+          "description": "broken ventana"
+        },
+        {
+          "name": "ventana not working",
+          "name_hebrew": "פתח אוורור לא עובד",
+          "description": "ventana not working"
         },
         {
           "name": "broken heater",
@@ -173,6 +181,7 @@
       ]
     },
     {
+      "id": "400",
       "name": "Elevators",
       "name_hebrew": "מעליות",
       "description": "Elevators",
@@ -232,6 +241,7 @@
       ]
     },
     {
+      "id": "500",
       "name": "General maintenance",
       "name_hebrew": "תחזוקה כללית",
       "description": "General maintenance",
@@ -296,6 +306,7 @@
       ]
     },
     {
+      "id": "600",
       "name": "Electonic devices",
       "name_hebrew": "מכשירי חשמל",
       "description": "Electonic devices",
