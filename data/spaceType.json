@@ -1,0 +1,18 @@
+{
+    "toilet": "toilet",
+    "office": "office",
+    "kitchen": "kitchen",
+    "classroom": "classroom",
+    "storage": "storage",
+    "stairs": "stairs",
+    "elevator": "elevator",
+    "hlway": "hlway",
+    "room": "room",
+    "entrance": "entrance",
+    "exit": "exit",
+    "garage": "garage",
+    "gate": "gate",
+    "parking": "parking",
+    "garden": "garden",
+    "balcony": "balcony"
+}
