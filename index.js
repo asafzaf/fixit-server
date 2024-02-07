@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 
 app.use("/space-types", spaceTypeRouter);
 app.use("/fault-types", faultTypeRouter);
-
+ 
 app.all("*", (req, res, next) => {
   next(new NotFoundError("resource"));
 });
