@@ -6,7 +6,7 @@
       "name_hebrew": "חשמל",
       "description": "Electricity",
       "icon": "electricity.png",
-      "color": "#DEBD03",
+      "colors": ["#DEBD03", "#FFE032"],
       "types": [
         {
           "name": "Exposed socket",
@@ -41,7 +41,7 @@
       "name_hebrew": "מים",
       "description": "Water",
       "icon": "water.png",
-      "color": "#03A9DE",
+      "colors": ["#03A9DE", "#35CAFB"],
       "types": [
         {
           "name": "Leak",
@@ -81,7 +81,7 @@
       "name_hebrew": "שירותים",
       "description": "Toilet",
       "icon": "toilet.png",
-      "color": "#03DEA9",
+      "colors": ["#03DEA9", "#35FBCA"],
       "types": [
         {
           "name": "Clogged toilet",
@@ -186,7 +186,7 @@
       "name_hebrew": "מעליות",
       "description": "Elevators",
       "icon": "elevator.png",
-      "color": "#B68A4B",
+      "colors": ["#B68A4B", "#D9B97A"],
       "types": [
         {
           "name": "Elevator not working",
@@ -246,7 +246,7 @@
       "name_hebrew": "תחזוקה כללית",
       "description": "General maintenance",
       "icon": "general.png",
-      "color": "#DB6F59",
+      "colors": ["#DB6F59", "#FBAE9E"],
       "types": [
         {
           "name": "Broken door",
