@@ -11,7 +11,6 @@ const instance = fs.readFileSync("./data/faultCollection.json", "utf-8");
 module.exports = class FaultTypeController extends EventEmitter {
   constructor() {
     super();
-    this.e = "e";
   }
 
   getAllFaultTypes = (req, res) => {
@@ -64,5 +63,4 @@ module.exports = class FaultTypeController extends EventEmitter {
       }
     }
   };
-  
 };
