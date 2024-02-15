@@ -30,8 +30,27 @@ app.all("*", (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+const serv = app.listen(port, () => {
+  process.env.NODE_ENV === "test"
+    ? null
+    : console.log(`Server is running on port ${port}`);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.log(err.name, err.message);
+  console.log("Unhandled Rejection! Shutting down...");
+  serv.close(() => {
+    process.exit(1);
+  });
+});
+
+
+process.on("uncaughtException", (err) => {
+  console.log(err.name, err.message);
+  console.log("Uncaught Exception! Shutting down...");
+  serv.close(() => {
+    process.exit(1);
+  });
 });
 
 module.exports = app;
