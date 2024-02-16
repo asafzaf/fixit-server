@@ -2,6 +2,8 @@ const express = require("express");
 const spaceTypeRouter = require("../routers/spaceType.router");
 const faultTypeRouter = require("../routers/faultType.router");
 const userRouter = require("../routers/user.router");
+const buildingRouter = require("../routers/building.router");
+const outsideRouter = require("../routers/outside.router");
 const globalErrorHandler = require("../controllers/error.controller");
 const logger = require("morgan");
 const {
@@ -23,6 +25,8 @@ app.get("/", (req, res) => {
 app.use("/api/v1/space-types", spaceTypeRouter);
 app.use("/api/v1/fault-types", faultTypeRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/building", buildingRouter);
+app.use("/api/v1/outside", outsideRouter);
 
 app.all("*", (req, res, next) => {
   next(new NotFoundError(req.originalUrl));
