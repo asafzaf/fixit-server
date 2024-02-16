@@ -39,7 +39,7 @@ const userSchema = new Schema({
 });
 
 userSchema.pre("save", async function (next) {
-  if(!this.isModified('password')) return next();
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
   next();
@@ -63,4 +63,4 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
-module.exports = model("users", userSchema);;
+module.exports = model("users", userSchema);
