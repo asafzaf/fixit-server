@@ -1,13 +1,7 @@
 const { Router } = require('express');
-const fs = require('fs');
+const spaceTypeController = require('../controllers/spaceType.controller');
 const spaceTypeRouter = new Router();
 
-const instance = fs.readFileSync('./data/spaceType.json', 'utf8');
-
-spaceTypeRouter.get('/', (req, res) => {
-    res.json(JSON.parse(instance));
-}).all((req, res, next) => {
-    res.status(404).send('Resource not found');
-});
+spaceTypeRouter.get('/', spaceTypeController.getAllSpaceTypes);
 
 module.exports = spaceTypeRouter;
