@@ -1,6 +1,7 @@
 const express = require("express");
 const spaceTypeRouter = require("../routers/spaceType.router");
-const faultTypeRouter = require("../routers/faultType.router");
+const faultDomainRouter = require("../routers/faultDomain.router");
+const faultRouter = require("../routers/fault.router");
 const userRouter = require("../routers/user.router");
 const buildingRouter = require("../routers/building.router");
 const outsideRouter = require("../routers/outside.router");
@@ -22,9 +23,10 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-app.use("/api/v1/space-types", spaceTypeRouter);
-app.use("/api/v1/fault-types", faultTypeRouter);
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/space-type", spaceTypeRouter);
+app.use("/api/v1/fault-domain", faultDomainRouter);
+app.use("/api/v1/fault", faultRouter);
+app.use("/api/v1/user", userRouter);
 app.use("/api/v1/building", buildingRouter);
 app.use("/api/v1/outside", outsideRouter);
 
