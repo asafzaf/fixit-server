@@ -2,7 +2,8 @@ const { Schema, model } = require("mongoose");
 
 const faultSchema = new Schema({
   domainId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "fault.domains",
     required: [true, "A fault must have a domainId"],
   },
   domainNameEng: {
@@ -13,24 +14,26 @@ const faultSchema = new Schema({
     type: String,
     required: [true, "A fault must have a domainNameHeb"],
   },
-  typeId: {
+  faultTypeId: {
     type: String,
-    required: [true, "A fault must have a typeId"],
+    required: [true, "A fault must have a faultTypeId"],
   },
-  typeNameEng: {
+  faultTypeNameEng: {
     type: String,
-    required: [true, "A fault must have a typeNameEng"],
+    required: [true, "A fault must have a faultTypeNameEng"],
   },
-  typeNameHeb: {
+  faultTypeNameHeb: {
     type: String,
-    required: [true, "A fault must have a typeNameHeb"],
+    required: [true, "A fault must have a faultTypeNameHeb"],
   },
   buildingId: {
     type: Schema.Types.ObjectId,
     ref: "building",
+    default: null,
   },
   buildingName: {
     type: String,
+    default: null,
   },
   outSide: {
     type: Boolean,
@@ -49,6 +52,20 @@ const faultSchema = new Schema({
     type: Number,
     default: 0,
   },
+  spaceTypeId: {
+    // addddddd
+    type: Schema.Types.ObjectId,
+    ref: "space.types",
+    required: [true, "A fault must have a spaceTypeId"],
+  },
+  spaceTypeNameEng: {
+    type: String,
+    required: [true, "A fault must have a spaceTypeNameEng"],
+  },
+  spaceTypeNameHeb: {
+    type: String,
+    required: [true, "A fault must have a spaceTypeNameHeb"],
+  },
   spaceNumber: {
     type: String,
     required: [true, "A fault must have a spaceNumber"],
@@ -63,12 +80,12 @@ const faultSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "in-progress", "completed"],
+    enum: ["pending", "in-progress", "closed"],
     default: "pending",
   },
-  priority: {
+  urgency: {
     type: Number,
-    required: [true, "A fault must have a priority"],
+    required: [true, "A fault must have a urgency"],
   },
   reportByUser: {
     type: Schema.Types.ObjectId,
@@ -93,4 +110,4 @@ const faultSchema = new Schema({
   },
 });
 
-module.exports = model("fault", faultSchema);
+module.exports = model("faultss", faultSchema);

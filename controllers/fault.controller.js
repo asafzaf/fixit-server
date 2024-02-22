@@ -37,15 +37,15 @@ const bodyValidation = (body, next) => {
     !body.domainId ||
     !body.domainNameEng ||
     !body.domainNameHeb ||
-    !body.typeId ||
-    !body.typeNameEng ||
-    !body.typeNameHeb ||
+    !body.spaceTypeId ||
+    !body.spaceTypeNameEng ||
+    !body.spaceTypeNameHeb ||
     !body.buildingId ||
     !body.buildingName ||
     !body.spaceNumber ||
     !body.spaceName ||
     !body.description ||
-    !body.priority ||
+    !body.urgency ||
     !body.reportByUser
   ) {
     throw next(new BadRequestError("data"));
