@@ -32,7 +32,7 @@ const userSchema = new Schema({
     },
   },
   passwordChangedAt: Date,
-  isMaintenace: {
+  isMaintenace: { // remove
     type: Boolean,
     default: false,
   },
