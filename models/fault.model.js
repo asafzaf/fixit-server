@@ -110,4 +110,4 @@ const faultSchema = new Schema({
   },
 });
 
-module.exports = model("faultss", faultSchema);
+module.exports = model("fault", faultSchema);
