@@ -46,7 +46,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new BadRequestError("email or password"));
   }
-  const user = await userRepository.retrieve({ email }).select("+password");
+  const user = await userRepository.findOne({ email }).select("+password");
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new UnauthorizedError("Incorrect email or password!"));
   }

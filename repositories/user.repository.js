@@ -10,6 +10,10 @@ module.exports = {
     return db.findById(id);
   },
 
+  findOne(query) {
+    return db.findOne(query);
+  },
+
   create(data) {
     return db.create(data);
   },
