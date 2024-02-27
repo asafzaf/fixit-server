@@ -21,23 +21,23 @@ exports.getAllFaults = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllFaultsById = catchAsync(async (req, res, next) => {
-  const id = new mongoose.Types.ObjectId.createFromHexString(req.params.id);
-  const exludedFields = ["password", "passwordConfirm", "isMaintenace", "role", "active", "createdAt", "updatedAt"];
-  exludedFields.forEach((el) => delete id[el]);
-  const faults = await faultRepository.findByUserId({
-    reportByUser: id,
-  });
-  if (!faults) {
+  const id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next(new BadRequestError("id"));
+  }
+  const faults = await faultRepository.find();
+  const fa = faults.filter(fault => fault.reportByUser.toString() === id);
+  if (!fa) {
     return next(new BadRequestError("data"));
   }
-  if (faults.length === 0) {
+  if (fa.length === 0) {
     return next(new NotFoundError("faults"));
   }
   return res.status(200).json({
     status: "success",
-    results: faults.length,
+    results: fa.length,
     data: {
-      faults,
+      fa,
     },
   });
 });
