@@ -1,7 +1,7 @@
 const faultRepository = require("../repositories/fault.repository");
 const { BadRequestError, NotFoundError } = require("../errors/errors");
 const catchAsync = require("../utils/catch.async");
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 exports.getAllFaults = catchAsync(async (req, res, next) => {
   const faults = await faultRepository.find();
