@@ -1,7 +1,7 @@
 const faultRepository = require("../repositories/fault.repository");
 const { BadRequestError, NotFoundError } = require("../errors/errors");
 const catchAsync = require("../utils/catch.async");
-const mongoose = require('mongoose');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 exports.getAllFaults = catchAsync(async (req, res, next) => {
   const faults = await faultRepository.find();
@@ -21,7 +21,7 @@ exports.getAllFaults = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllFaultsById = catchAsync(async (req, res, next) => {
-  const id = new mongoose.mongo.BSONPure.ObjectID.fromHexString(req.params.id);
+  const id = new ObjectId.createFromHexString(req.params.id);
   const exludedFields = ["password", "passwordConfirm", "isMaintenace", "role", "active", "createdAt", "updatedAt"];
   exludedFields.forEach((el) => delete id[el]);
   const faults = await faultRepository.findByUserId({
