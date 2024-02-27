@@ -21,6 +21,7 @@ exports.getAllFaults = catchAsync(async (req, res, next) => {
 
 exports.getAllFaultsById = catchAsync(async (req, res, next) => {
   const id = req.params.id;
+  console.log(id);
   const exludedFields = ["password", "passwordConfirm", "isMaintenace", "role", "active", "createdAt", "updatedAt"];
   exludedFields.forEach((el) => delete id[el]);
   const faults = await faultRepository.findByUserId({
