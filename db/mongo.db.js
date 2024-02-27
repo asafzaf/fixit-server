@@ -32,6 +32,10 @@ module.exports = class MongoDB extends EventEmitter {
     return this.Model.find({});
   }
 
+  findByUserId({id}) {
+    return this.Model.find(id);
+  }
+
   findOne(query) {
     return this.Model.findOne(query);
   }

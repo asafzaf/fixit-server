@@ -19,6 +19,28 @@ exports.getAllFaults = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getAllFaultsById = catchAsync(async (req, res, next) => {
+  const id = req.body.id;
+  const exludedFields = ["password", "passwordConfirm", "isMaintenace", "role", "active", "createdAt", "updatedAt"];
+  exludedFields.forEach((el) => delete id[el]);
+  const faults = await faultRepository.findByUserId({
+    reportByUser: id,
+  });
+  if (!faults) {
+    return next(new BadRequestError("data"));
+  }
+  if (faults.length === 0) {
+    return next(new NotFoundError("faults"));
+  }
+  return res.status(200).json({
+    status: "success",
+    results: faults.length,
+    data: {
+      faults,
+    },
+  });
+});
+
 exports.createFault = catchAsync(async (req, res, next) => {
   await bodyValidation(req.body, next);
   const fault = await faultRepository.create(req.body);

@@ -6,6 +6,10 @@ module.exports = {
     return db.find();
   },
 
+  findByUserId({id}) {
+    return db.findByUserId(id);
+  },
+
   retrieve(id) {
     return db.findById(id);
   },
