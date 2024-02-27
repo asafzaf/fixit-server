@@ -1,6 +1,7 @@
 const faultRepository = require("../repositories/fault.repository");
 const { BadRequestError, NotFoundError } = require("../errors/errors");
 const catchAsync = require("../utils/catch.async");
+const { Types } = require("mongoose");
 
 exports.getAllFaults = catchAsync(async (req, res, next) => {
   const faults = await faultRepository.find();
@@ -25,7 +26,7 @@ exports.getAllFaultsById = catchAsync(async (req, res, next) => {
   const exludedFields = ["password", "passwordConfirm", "isMaintenace", "role", "active", "createdAt", "updatedAt"];
   exludedFields.forEach((el) => delete id[el]);
   const faults = await faultRepository.findByUserId({
-    reportByUser: id,
+    reportByUser: Types.ObjectId(id),
   });
   if (!faults) {
     return next(new BadRequestError("data"));
