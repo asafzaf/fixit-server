@@ -50,7 +50,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new UnauthorizedError("Incorrect email or password!"));
   }
-  createSendToken(user, 200, "User logged in successfull", res);
+  createSendToken(user, 200, "User logged in successfully", res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {

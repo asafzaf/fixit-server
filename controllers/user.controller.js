@@ -18,6 +18,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 exports.getUser = catchAsync(async (req, res, next) => {
   if (!idIsValid(req.params.id)) {
     return next(new BadRequestError("id"));

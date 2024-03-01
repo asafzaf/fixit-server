@@ -20,7 +20,7 @@ exports.getAllFaults = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllFaultsById = catchAsync(async (req, res, next) => {
+exports.getAllFaultsById = catchAsync(async (req, res, next) => {  // by reportByUser field (id)
   const id = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return next(new BadRequestError("id"));
@@ -42,6 +42,21 @@ exports.getAllFaultsById = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getFault = catchAsync(async (req, res, next) => {
+  const fault = await faultRepository.findById(req.params.id);
+  if (!fault) {
+    return next(new NotFoundError("fault"));
+  }
+  return res.status(200).json({
+    status: "success",
+    data: {
+      fault,
+    },
+  });
+});
+
+// get fault by by building id
+
 exports.createFault = catchAsync(async (req, res, next) => {
   await bodyValidation(req.body, next);
   const fault = await faultRepository.create(req.body);
@@ -52,6 +67,11 @@ exports.createFault = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+
+// update fault by id + params
+
+// delete fault by id
 
 const bodyValidation = (body, next) => {
   if (Object.keys(body).length === 0) {
