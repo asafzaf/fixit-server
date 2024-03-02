@@ -1,11 +1,6 @@
 const express = require("express");
-const spaceTypeRouter = require("../routers/spaceType.router");
-const faultDomainRouter = require("../routers/faultDomain.router");
-const faultRouter = require("../routers/fault.router");
-const userRouter = require("../routers/user.router");
-const buildingRouter = require("../routers/building.router");
-const outsideRouter = require("../routers/outside.router");
 const globalErrorHandler = require("../controllers/error.controller");
+const mainRouter = require("../routers/main.router");
 const logger = require("morgan");
 const {
   BadRequestError,
@@ -19,16 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger("dev"));
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
-
-app.use("/api/v1/space-type", spaceTypeRouter);
-app.use("/api/v1/fault-domain", faultDomainRouter);
-app.use("/api/v1/fault", faultRouter);
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/building", buildingRouter);
-app.use("/api/v1/outside", outsideRouter);
+app.use("/", mainRouter);
 
 app.all("*", (req, res, next) => {
   next(new NotFoundError(req.originalUrl));
