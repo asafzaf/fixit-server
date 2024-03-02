@@ -83,6 +83,10 @@ const faultSchema = new Schema({
     enum: ["pending", "in-progress", "closed"],
     default: "pending",
   },
+  photo: {
+    type: String,
+    default: null,
+  },
   urgency: {
     type: Number,
     required: [true, "A fault must have a urgency"],

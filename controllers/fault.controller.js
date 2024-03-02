@@ -1,8 +1,65 @@
-const faultRepository = require("../repositories/fault.repository");
-const { BadRequestError, NotFoundError } = require("../errors/errors");
-const catchAsync = require("../utils/catch.async");
-const mongoose = require('mongoose');
+const multer = require("multer");
+const fs = require('fs');
 
+const faultRepository = require("../repositories/fault.repository");
+const { BadRequestError, NotFoundError, ServerError } = require("../errors/errors");
+const catchAsync = require("../utils/catch.async");
+const mongoose = require("mongoose");
+
+
+//uploading photos
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/img/faults");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `user-${req.body.reportByUser}-${Date.now()}.${ext}`);
+  },
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new BadRequestError("image file"), false);
+  }
+};
+
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+
+exports.uploadFaultPhoto = upload.single("photo");
+
+//get photos
+exports.getFaultPhoto = (req, res, next) => {
+  const imageName = req.params.imageName;
+  const path = `public/img/faults/${imageName}`;
+  if (!fs.existsSync(path)) {
+    return next(new NotFoundError("photo"));
+  }
+
+  const readStream = fs.createReadStream(path);
+  readStream.pipe(res);
+
+  readStream.on("error", (err) => {
+    return next(new ServerError("photo"));
+  });
+
+  res.on("error", (err) => {
+    return next(new ServerError("photo"));
+  });
+
+  readStream.on("end", () => {
+    res.end();
+  });
+
+  res.on("finish", () => {
+    readStream.close();
+  });
+
+};
+
+// CRUD functions
 exports.getAllFaults = catchAsync(async (req, res, next) => {
   const faults = await faultRepository.find();
   if (!faults) {
@@ -20,13 +77,14 @@ exports.getAllFaults = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllFaultsById = catchAsync(async (req, res, next) => {  // by reportByUser field (id)
+exports.getAllFaultsById = catchAsync(async (req, res, next) => {
+  // by reportByUser field (id)
   const id = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return next(new BadRequestError("id"));
   }
   const faults = await faultRepository.find();
-  const fa = faults.filter(fault => fault.reportByUser.toString() === id);
+  const fa = faults.filter((fault) => fault.reportByUser.toString() === id);
   if (!fa) {
     return next(new BadRequestError("data"));
   }
@@ -59,6 +117,13 @@ exports.getFaultById = catchAsync(async (req, res, next) => {
 // get fault by by building id
 
 exports.createFault = catchAsync(async (req, res, next) => {
+  console.log(req.file);
+  console.log(req.body);
+
+  if (req.file) {
+    req.body.photo = req.file.filename;
+  }
+
   await bodyValidation(req.body, next);
   const fault = await faultRepository.create(req.body);
   return res.status(201).json({
@@ -68,7 +133,6 @@ exports.createFault = catchAsync(async (req, res, next) => {
     },
   });
 });
-
 
 // update fault by id + params
 

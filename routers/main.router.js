@@ -1,4 +1,5 @@
 const express = require("express");
+
 const spaceTypeRouter = require("../routers/spaceType.router");
 const faultDomainRouter = require("../routers/faultDomain.router");
 const faultRouter = require("../routers/fault.router");
