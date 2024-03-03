@@ -137,7 +137,7 @@ exports.createFault = catchAsync(async (req, res, next) => {
 });
 
 exports.updateFault = catchAsync(async (req, res, next) => {
-  const fault = await faultRepository.findById(req.params.id);
+  const fault = await faultRepository.retrieve(req.params.id);
   if (!fault) {
     return next(
       new NotFoundError("not found donation with id: " + req.params.id)
