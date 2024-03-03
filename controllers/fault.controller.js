@@ -62,6 +62,8 @@ exports.getFaultPhoto = (req, res, next) => {
 };
 
 // CRUD functions
+
+// get all faults
 exports.getAllFaults = catchAsync(async (req, res, next) => {
   const faults = await faultRepository.find();
   if (!faults) {
@@ -79,6 +81,7 @@ exports.getAllFaults = catchAsync(async (req, res, next) => {
   });
 });
 
+// get all faults by user id
 exports.getAllFaultsById = catchAsync(async (req, res, next) => {
   // by reportByUser field (id)
   const id = req.params.id;
@@ -102,6 +105,7 @@ exports.getAllFaultsById = catchAsync(async (req, res, next) => {
   });
 });
 
+// get fault by id
 exports.getFaultById = catchAsync(async (req, res, next) => {
   const fault = await faultRepository.retrieve(req.params.id);
   if (!fault) {
@@ -115,8 +119,7 @@ exports.getFaultById = catchAsync(async (req, res, next) => {
   });
 });
 
-// get fault by by building id
-
+// create fault
 exports.createFault = catchAsync(async (req, res, next) => {
 
   if (req.file) {
@@ -133,6 +136,7 @@ exports.createFault = catchAsync(async (req, res, next) => {
   });
 });
 
+//  update fault by id
 exports.updateFault = catchAsync(async (req, res, next) => {
   const fault = await faultRepository.retrieve(req.params.id);
   if (!fault) {
@@ -151,6 +155,7 @@ exports.updateFault = catchAsync(async (req, res, next) => {
 });
 
 // delete fault by id
+// get fault by by building id
 
 const bodyValidation = (body, next) => {
   if (Object.keys(body).length === 0) {
