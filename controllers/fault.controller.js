@@ -134,8 +134,28 @@ exports.createFault = catchAsync(async (req, res, next) => {
   });
 });
 
+<<<<<<< HEAD
+exports.updateFault = catchAsync(async (req, res, next) => {
+  const fault = await faultRepository.findById(req.params.id);
+  if (!fault) {
+    return next(
+      new NotFoundError("not found donation with id: " + req.params.id)
+    );
+  }
+  // await bodyValidation(req.body, next);
+  const updatedFault = await faultRepository.put(req.params.id, req.body);
+  return res.status(200).json({
+    status: "success",
+    data: {
+      fault: updatedFault,
+    },
+  });
+});
+
+=======
 // update fault by id + params
 
+>>>>>>> 26c523f1783fc5faeed77de67fa486debe5e48c0
 // delete fault by id
 
 const bodyValidation = (body, next) => {
