@@ -36,7 +36,8 @@ exports.uploadFaultPhoto = upload.single("photo");
 //get photos
 exports.getFaultPhoto = (req, res, next) => {
   const imageName = req.params.imageName;
-  const path = `public/img/faults/${imageName}`;
+  console.log(imageName);
+  const path = `public/img/faults/${imageName}.jpeg`;
   if (!fs.existsSync(path)) {
     return next(new NotFoundError("photo"));
   }
