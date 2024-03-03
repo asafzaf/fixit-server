@@ -8,7 +8,7 @@ router
   .route("/")
   .get(faultController.getAllFaults)
   .post(faultController.createFault)
-  .put(faultController.updateFault)
-  .delete(faultController.deleteFault);
+  .put(faultController.updateFault);
+  // .delete(faultController.deleteFault);
 
 module.exports = router;
