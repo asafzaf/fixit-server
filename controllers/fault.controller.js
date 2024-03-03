@@ -36,7 +36,8 @@ exports.uploadFaultPhoto = upload.single("photo");
 //get photos
 exports.getFaultPhoto = (req, res, next) => {
   const imageName = req.params.imageName;
-  const path = `public/img/faults/${imageName}`;
+  console.log(imageName);
+  const path = `public/img/faults/${imageName}.jpeg`;
   if (!fs.existsSync(path)) {
     return next(new NotFoundError("photo"));
   }
@@ -107,7 +108,6 @@ exports.getAllFaultsById = catchAsync(async (req, res, next) => {
 
 // get fault by id
 exports.getFaultById = catchAsync(async (req, res, next) => {
-  console.log(req.params.id);
   const fault = await faultRepository.retrieve(req.params.id);
   if (!fault) {
     return next(new NotFoundError("fault"));
@@ -122,8 +122,6 @@ exports.getFaultById = catchAsync(async (req, res, next) => {
 
 // create fault
 exports.createFault = catchAsync(async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
 
   if (req.file) {
     req.body.photo = req.file.filename;

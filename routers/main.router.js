@@ -6,6 +6,7 @@ const faultRouter = require("../routers/fault.router");
 const userRouter = require("../routers/user.router");
 const buildingRouter = require("../routers/building.router");
 const outsideRouter = require("../routers/outside.router");
+const faultController = require("../controllers/fault.controller");
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
+router.use("/api/v1/image/:imageName", faultController.getFaultPhoto);
 router.use("/api/v1/space-type", spaceTypeRouter);
 router.use("/api/v1/fault-domain", faultDomainRouter);
 router.use("/api/v1/fault", faultRouter);
