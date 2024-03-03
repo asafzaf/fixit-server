@@ -147,7 +147,7 @@ exports.updateFault = catchAsync(async (req, res, next) => {
       new NotFoundError("not found donation with id: " + req.params.id)
     );
   }
-  // await bodyValidation(req.body, next);
+  await updateBodyValidation(req.body, next);
   const updatedFault = await faultRepository.put(req.params.id, req.body);
   return res.status(200).json({
     status: "success",
@@ -158,7 +158,39 @@ exports.updateFault = catchAsync(async (req, res, next) => {
 });
 
 // delete fault by id
+exports.deleteFault = catchAsync(async (req, res, next) => {
+  const fault = await faultRepository.delete(req.params.id);
+  if (!fault) {
+    return next(new NotFoundError("fault"));
+  }
+  await faultRepository.delete(req.params.id);
+  return res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+
 // get fault by by building id
+
+const updateBodyValidation = (body, next) => {
+  if (
+    !body.domainId &&
+    !body.domainNameEng &&
+    !body.domainNameHeb &&
+    !body.spaceTypeId &&
+    !body.spaceTypeNameEng &&
+    !body.spaceTypeNameHeb &&
+    !body.buildingId &&
+    !body.buildingName &&
+    !body.spaceNumber &&
+    !body.spaceName &&
+    !body.description &&
+    !body.urgency &&
+    !body.reportByUser
+  ) {
+    throw next(new BadRequestError("no detailes to update"));
+  }
+};
 
 const bodyValidation = (body, next) => {
   if (Object.keys(body).length === 0) {
