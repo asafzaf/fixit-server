@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+console.log("hey");
 const EventEmitter = require("events");
 const {
   DB_USER,
