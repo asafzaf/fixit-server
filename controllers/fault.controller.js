@@ -103,7 +103,6 @@ exports.getAllFaultsById = catchAsync(async (req, res, next) => {
 });
 
 exports.getFaultById = catchAsync(async (req, res, next) => {
-  console.log(req.params.id);
   const fault = await faultRepository.retrieve(req.params.id);
   if (!fault) {
     return next(new NotFoundError("fault"));
@@ -119,8 +118,6 @@ exports.getFaultById = catchAsync(async (req, res, next) => {
 // get fault by by building id
 
 exports.createFault = catchAsync(async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
 
   if (req.file) {
     req.body.photo = req.file.filename;
