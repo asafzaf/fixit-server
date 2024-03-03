@@ -13,13 +13,15 @@ module.exports = class MongoDB extends EventEmitter {
   constructor(entiyName) {
     super();
     this.Model = require(`../models/${entiyName}.model`);
-    this.connectDB();
+    this.connectDB(entiyName);
   }
-  connectDB() {
+  connectDB(entiyName) {
     mongoose
       .connect(connectionUrl)
       .then(() => {
-        NODE_ENV == "test" ? null : console.log("Connected to MongoDB");
+        NODE_ENV == "test"
+          ? null
+          : console.log(`Connected to MongoDB: ${entiyName}`);
       })
       .catch((error) => {
         NODE_ENV == "test"
