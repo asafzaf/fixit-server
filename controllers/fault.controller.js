@@ -1,11 +1,14 @@
 const multer = require("multer");
-const fs = require('fs');
+const fs = require("fs");
 
 const faultRepository = require("../repositories/fault.repository");
-const { BadRequestError, NotFoundError, ServerError } = require("../errors/errors");
+const {
+  BadRequestError,
+  NotFoundError,
+  ServerError,
+} = require("../errors/errors");
 const catchAsync = require("../utils/catch.async");
 const mongoose = require("mongoose");
-
 
 //uploading photos
 const multerStorage = multer.diskStorage({
@@ -56,7 +59,6 @@ exports.getFaultPhoto = (req, res, next) => {
   res.on("finish", () => {
     readStream.close();
   });
-
 };
 
 // CRUD functions
@@ -134,7 +136,6 @@ exports.createFault = catchAsync(async (req, res, next) => {
   });
 });
 
-<<<<<<< HEAD
 exports.updateFault = catchAsync(async (req, res, next) => {
   const fault = await faultRepository.findById(req.params.id);
   if (!fault) {
@@ -152,10 +153,6 @@ exports.updateFault = catchAsync(async (req, res, next) => {
   });
 });
 
-=======
-// update fault by id + params
-
->>>>>>> 26c523f1783fc5faeed77de67fa486debe5e48c0
 // delete fault by id
 
 const bodyValidation = (body, next) => {
