@@ -103,6 +103,7 @@ const faultSchema = new Schema({
   maintananceUser: {
     type: Schema.Types.ObjectId,
     ref: "users",
+    default: null,
   },
   createdAt: {
     type: Date,
