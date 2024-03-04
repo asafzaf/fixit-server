@@ -122,7 +122,6 @@ exports.getFaultById = catchAsync(async (req, res, next) => {
 
 // create fault
 exports.createFault = catchAsync(async (req, res, next) => {
-
   if (req.file) {
     req.body.photo = req.file.filename;
   }
@@ -169,6 +168,25 @@ exports.deleteFault = catchAsync(async (req, res, next) => {
 });
 
 // get fault by by building id
+exports.getAllFaultsByBuildingId = catchAsync(async (req, res, next) => {
+  // building id
+  const id = req.params.id;
+  const faults = await faultRepository.find();
+  const fa = faults.filter((fault) => fault.buildingId.toString() === id);
+  if (!fa) {
+    return next(new BadRequestError("data"));
+  }
+  if (fa.length === 0) {
+    return next(new NotFoundError("faults"));
+  }
+  return res.status(200).json({
+    status: "success",
+    results: fa.length,
+    data: {
+      fa,
+    },
+  });
+});
 
 const updateBodyValidation = (body, next) => {
   if (
