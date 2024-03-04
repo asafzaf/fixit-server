@@ -204,7 +204,7 @@ const updateBodyValidation = (body, next) => {
     !body.urgency &&
     !body.reportByUser
   ) {
-    throw next(new BadRequestError("no detailes to update"));
+    throw next(new BadRequestError("no details to update"));
   }
 };
 
