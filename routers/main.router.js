@@ -1,5 +1,6 @@
 const express = require("express");
 
+const maintenanceRouter = require("../routers/maintenance.router");
 const spaceTypeRouter = require("../routers/spaceType.router");
 const faultDomainRouter = require("../routers/faultDomain.router");
 const faultRouter = require("../routers/fault.router");
@@ -15,6 +16,7 @@ router.get("/", (req, res) => {
 });
 
 router.use("/api/v1/image/:imageName", faultController.getFaultPhoto);
+router.use("/api/v1/maintenance", maintenanceRouter);
 router.use("/api/v1/space-type", spaceTypeRouter);
 router.use("/api/v1/fault-domain", faultDomainRouter);
 router.use("/api/v1/fault", faultRouter);
