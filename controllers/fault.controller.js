@@ -201,10 +201,11 @@ const updateBodyValidation = (body, next) => {
     !body.spaceNumber &&
     !body.spaceName &&
     !body.description &&
+    !body.status &&
     !body.urgency &&
     !body.reportByUser
   ) {
-    throw next(new BadRequestError("no details to update"));
+    throw next(new BadRequestError("details to update"));
   }
 };
 
