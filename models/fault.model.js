@@ -55,7 +55,7 @@ const faultSchema = new Schema({
   spaceTypeId: {
     type: Schema.Types.ObjectId,
     ref: "space.types",
-    required: [true, "A fault must have a spaceTypeId"],
+    // required: [true, "A fault must have a spaceTypeId"],
   },
   spaceTypeNameEng: {
     type: String,
@@ -63,11 +63,12 @@ const faultSchema = new Schema({
   },
   spaceTypeNameHeb: {
     type: String,
-    required: [true, "A fault must have a spaceTypeNameHeb"],
+    // required: [true, "A fault must have a spaceTypeNameHeb"],
   },
   spaceNumber: {
     type: String,
-    required: [true, "A fault must have a spaceNumber"],
+    // required: [true, "A fault must have a spaceNumber"],
+    default: null,
   },
   spaceName: {
     type: String,
