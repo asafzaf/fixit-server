@@ -77,7 +77,7 @@ const faultSchema = new Schema({
   },
   description: {
     type: String,
-    required: [true, "A fault must have a description"],
+    // required: [true, "A fault must have a description"],
   },
   status: {
     type: String,
