@@ -174,7 +174,13 @@ exports.getAllFaultsByBuildingId = catchAsync(async (req, res, next) => {
   // building id
   const id = req.params.id;
   const faults = await faultRepository.find();
-  const fa = faults.filter((fault) => fault.buildingId.toString() === id);
+  const fa = faults.filter((fault) => {
+    if (fault.buildingId) {
+      return fault.buildingId.toString() === id;
+    } else if (fault.outSideId) {
+      return fault.outSideId.toString() === id;
+    }
+  });
   if (!fa) {
     return next(new BadRequestError("data"));
   }
