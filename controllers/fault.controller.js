@@ -218,7 +218,7 @@ const bodyValidation = (body, next) => {
     !body.domainId ||
     !body.domainNameEng ||
     !body.domainNameHeb ||
-    !body.spaceTypeId ||
+    // !body.spaceTypeId ||
     !body.spaceTypeNameEng ||
     // !body.spaceTypeNameHeb ||
     // !body.buildingId ||
