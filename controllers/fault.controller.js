@@ -223,7 +223,7 @@ const bodyValidation = (body, next) => {
     // !body.spaceTypeNameHeb ||
     // !body.buildingId ||
     // !body.buildingName ||
-    !body.spaceNumber ||
+    // !body.spaceNumber ||
     !body.spaceName ||
     // !body.description ||
     !body.urgency ||
