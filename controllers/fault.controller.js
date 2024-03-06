@@ -125,7 +125,7 @@ exports.createFault = catchAsync(async (req, res, next) => {
   if (req.file) {
     req.body.photo = req.file.filename;
   }
-
+  console.log(req.body);
   await bodyValidation(req.body, next);
   const fault = await faultRepository.create(req.body);
   return res.status(201).json({
@@ -229,6 +229,6 @@ const bodyValidation = (body, next) => {
   ) {
     throw next(new BadRequestError("data"));
   } else if (body.priority < 1 || body.priority > 5) {
-    throw next(new BadRequestError("priority"));
+    throw next(new BadRequestError("urgency level"));
   }
 };
