@@ -67,7 +67,7 @@ const faultSchema = new Schema({
   },
   spaceNumber: {
     type: String,
-    required: [true, "A fault must have a spaceNumber"],
+    // required: [true, "A fault must have a spaceNumber"],
   },
   spaceName: {
     type: String,

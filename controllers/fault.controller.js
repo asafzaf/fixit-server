@@ -127,7 +127,7 @@ exports.createFault = catchAsync(async (req, res, next) => {
   }
 
   await bodyValidation(req.body, next);
-  const fault = await faultRepository.create(req.body);
+  const fault = await faultRepository.create(req.body._parts);
   return res.status(201).json({
     status: "success",
     data: {
