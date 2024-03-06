@@ -55,6 +55,7 @@ const faultSchema = new Schema({
   spaceTypeId: {
     type: Schema.Types.ObjectId,
     ref: "space.types",
+    default: null,
     // required: [true, "A fault must have a spaceTypeId"],
   },
   spaceTypeNameEng: {
