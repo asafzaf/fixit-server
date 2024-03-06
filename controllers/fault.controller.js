@@ -220,9 +220,9 @@ const bodyValidation = (body, next) => {
     !body.domainNameHeb ||
     !body.spaceTypeId ||
     !body.spaceTypeNameEng ||
-    !body.spaceTypeNameHeb ||
-    !body.buildingId ||
-    !body.buildingName ||
+    // !body.spaceTypeNameHeb ||
+    // !body.buildingId ||
+    // !body.buildingName ||
     !body.spaceNumber ||
     !body.spaceName ||
     // !body.description ||
