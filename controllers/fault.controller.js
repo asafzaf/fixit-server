@@ -1,5 +1,6 @@
 const multer = require("multer");
 const fs = require("fs");
+const { uploadCloud } = require("../utils/cloudinary");
 
 const faultRepository = require("../repositories/fault.repository");
 const {
@@ -122,14 +123,17 @@ exports.getFaultById = catchAsync(async (req, res, next) => {
 
 // create fault
 exports.createFault = catchAsync(async (req, res, next) => {
+  // console.log(req.file);
   if (req.file) {
-    req.body.photo = req.file.filename;
+    // req.body.photo = req.file.filename;
+    req.body.photo = await uploadCloud(req.file.filename);
   }
-  console.log(req.body);
+  // console.log(req.body);
   await bodyValidation(req.body, next);
-  console.log("pass validation");
+  // console.log("pass validation");
   const fault = await faultRepository.create(req.body);
-  console.log("fault created");
+  // console.log("fault created");
+  // console.log(fault.photo);
   return res.status(201).json({
     status: "success",
     data: {
