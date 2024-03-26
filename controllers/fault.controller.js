@@ -202,6 +202,7 @@ exports.getAllFaultsByBuildingId = catchAsync(async (req, res, next) => {
 });
 
 const updateBodyValidation = (body, next) => {
+  console.log("body validation:", body);
   if (
     // !body.domainId &&
     // !body.domainNameEng &&
