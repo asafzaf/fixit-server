@@ -202,20 +202,21 @@ exports.getAllFaultsByBuildingId = catchAsync(async (req, res, next) => {
 
 const updateBodyValidation = (body, next) => {
   if (
-    !body.domainId &&
-    !body.domainNameEng &&
-    !body.domainNameHeb &&
-    !body.spaceTypeId &&
-    !body.spaceTypeNameEng &&
-    !body.spaceTypeNameHeb &&
-    !body.buildingId &&
-    !body.buildingName &&
-    !body.spaceNumber &&
-    !body.spaceName &&
-    !body.description &&
-    !body.status &&
-    !body.urgency &&
-    !body.reportByUser
+    // !body.domainId &&
+    // !body.domainNameEng &&
+    // !body.domainNameHeb &&
+    // !body.spaceTypeId &&
+    // !body.spaceTypeNameEng &&
+    // !body.spaceTypeNameHeb &&
+    // !body.buildingId &&
+    // !body.buildingName &&
+    // !body.spaceNumber &&
+    // !body.spaceName &&
+    // !body.description &&
+    // !body.status &&
+    !body.urgency
+    //  &&
+    // !body.reportByUser
   ) {
     throw next(new BadRequestError("details to update"));
   }
