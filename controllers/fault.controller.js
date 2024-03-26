@@ -150,7 +150,7 @@ exports.updateFault = catchAsync(async (req, res, next) => {
       new NotFoundError("not found donation with id: " + req.params.id)
     );
   }
-  // await updateBodyValidation(req.body, next);
+  await updateBodyValidation(req.body, next);
   const updatedFault = await faultRepository.put(req.params.id, req.body);
   return res.status(200).json({
     status: "success",
@@ -216,10 +216,12 @@ const updateBodyValidation = (body, next) => {
     // !body.spaceName &&
     // !body.description &&
     // !body.status &&
-    !body.urgency
+    body.urgency
     //  &&
     // !body.reportByUser
   ) {
+    return;
+  } else {
     throw next(new BadRequestError("details to update"));
   }
 };
