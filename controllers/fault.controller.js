@@ -158,6 +158,7 @@ exports.updateFault = catchAsync(async (req, res, next) => {
       fault: updatedFault,
     },
   });
+  //comment
 });
 
 // delete fault by id
