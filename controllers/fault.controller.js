@@ -1,5 +1,6 @@
 const multer = require("multer");
 const fs = require("fs");
+const { uploadCloud } = require("../utils/cloudinary");
 
 const faultRepository = require("../repositories/fault.repository");
 const {
@@ -37,7 +38,7 @@ exports.uploadFaultPhoto = upload.single("photo");
 exports.getFaultPhoto = (req, res, next) => {
   const imageName = req.params.imageName;
   console.log(imageName);
-  const path = `public/img/faults/${imageName}.jpeg`;
+  const path = `public/img/faults/${imageName}`;
   if (!fs.existsSync(path)) {
     return next(new NotFoundError("photo"));
   }
@@ -122,12 +123,17 @@ exports.getFaultById = catchAsync(async (req, res, next) => {
 
 // create fault
 exports.createFault = catchAsync(async (req, res, next) => {
+  // console.log(req.file);
   if (req.file) {
-    req.body.photo = req.file.filename;
+    // req.body.photo = req.file.filename;
+    req.body.photo = await uploadCloud(req.file.filename);
   }
-
+  // console.log(req.body);
   await bodyValidation(req.body, next);
+  // console.log("pass validation");
   const fault = await faultRepository.create(req.body);
+  // console.log("fault created");
+  // console.log(fault.photo);
   return res.status(201).json({
     status: "success",
     data: {
@@ -172,7 +178,13 @@ exports.getAllFaultsByBuildingId = catchAsync(async (req, res, next) => {
   // building id
   const id = req.params.id;
   const faults = await faultRepository.find();
-  const fa = faults.filter((fault) => fault.buildingId.toString() === id);
+  const fa = faults.filter((fault) => {
+    if (fault.buildingId) {
+      return fault.buildingId.toString() === id;
+    } else if (fault.outSideId) {
+      return fault.outSideId.toString() === id;
+    }
+  });
   if (!fa) {
     return next(new BadRequestError("data"));
   }
@@ -216,12 +228,12 @@ const bodyValidation = (body, next) => {
     !body.domainId ||
     !body.domainNameEng ||
     !body.domainNameHeb ||
-    !body.spaceTypeId ||
+    // !body.spaceTypeId ||
     !body.spaceTypeNameEng ||
-    !body.spaceTypeNameHeb ||
-    !body.buildingId ||
-    !body.buildingName ||
-    !body.spaceNumber ||
+    // !body.spaceTypeNameHeb ||
+    // !body.buildingId ||
+    // !body.buildingName ||
+    // !body.spaceNumber ||
     !body.spaceName ||
     // !body.description ||
     !body.urgency ||
@@ -229,6 +241,6 @@ const bodyValidation = (body, next) => {
   ) {
     throw next(new BadRequestError("data"));
   } else if (body.priority < 1 || body.priority > 5) {
-    throw next(new BadRequestError("priority"));
+    throw next(new BadRequestError("urgency level"));
   }
 };

@@ -1,6 +1,7 @@
 const express = require("express");
 const globalErrorHandler = require("../controllers/error.controller");
 const mainRouter = require("../routers/main.router");
+require("../utils/cloudinary");
 const logger = require("morgan");
 const {
   BadRequestError,
@@ -36,7 +37,6 @@ process.on("unhandledRejection", (err) => {
     process.exit(1);
   });
 });
-
 
 process.on("uncaughtException", (err) => {
   console.log(err.name, err.message);
