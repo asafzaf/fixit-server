@@ -62,6 +62,21 @@ describe("GET /api/v1/building/", () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(mockBuildingsRes);
   });
+
+  it("should return 404 when building no found", async () => {
+    const mockRes = {
+      status: "fail",
+      message: "buildings not found.",
+      name: "NotFoundError",
+      stack: null,
+    };
+
+    buildingRepository.find.mockResolvedValue([]);
+
+    const res = await request(app).get("/api/v1/building");
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toEqual(mockRes);
+  });
 });
 
 // GET building
@@ -105,25 +120,39 @@ describe("GET /api/v1/building/:id", () => {
     expect(res.body).toEqual(mockBuildingsRes);
   });
 
-  // ERROR - 400 (BadRequestError)
+  it("should return 404 when building no found", async () => {
+    const mockBuildingId = "65e595e7e63f9c2cfa4ca1b5";
 
-  // ERROR - 404 (NotFoundError)
-  //   it("should return 404 when building no found", async () => {
-  //     const mockRes = {
-  //       data: {
-  //         buildings: {
-  //           name: "NotFoundError",
-  //           status: "fail",
-  //           statusCode: 404,
-  //         },
-  //       },
-  //       status: "success",
-  //     };
+    const mockRes = {
+      status: "fail",
+      message: "building not found.",
+      name: "NotFoundError",
+      stack: null,
+    };
 
-  //     buildingRepository.find.mockResolvedValue(new NotFoundError("buildings"));
+    buildingRepository.retrieve.mockRejectedValue(
+      new NotFoundError("building")
+    );
 
-  //     const res = await request(app).get("/api/v1/building/:id");
-  //     expect(res.statusCode).toEqual(200);
-  //     expect(res.body).toEqual(mockRes);
-  //   }, 10000);
+    const res = await request(app).get(`/api/v1/building/${mockBuildingId}`);
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toEqual(mockRes);
+  });
+
+  it("should return 400 when building id is invalid", async () => {
+    const mockBuildingId = "65e595e7e63f9c2cfa4ca1b";
+
+    const mockRes = {
+      status: "fail",
+      message: "please provide a valid id.",
+      name: "BadRequestError",
+      stack: null,
+    };
+
+    buildingRepository.retrieve.mockRejectedValue(new BadRequestError("id"));
+
+    const res = await request(app).get(`/api/v1/building/${mockBuildingId}`);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual(mockRes);
+  });
 });
