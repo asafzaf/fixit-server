@@ -158,6 +158,7 @@ exports.updateFault = catchAsync(async (req, res, next) => {
       fault: updatedFault,
     },
   });
+  //comment
 });
 
 // delete fault by id
@@ -201,22 +202,26 @@ exports.getAllFaultsByBuildingId = catchAsync(async (req, res, next) => {
 });
 
 const updateBodyValidation = (body, next) => {
+  console.log("body validation:", body);
   if (
-    !body.domainId &&
-    !body.domainNameEng &&
-    !body.domainNameHeb &&
-    !body.spaceTypeId &&
-    !body.spaceTypeNameEng &&
-    !body.spaceTypeNameHeb &&
-    !body.buildingId &&
-    !body.buildingName &&
-    !body.spaceNumber &&
-    !body.spaceName &&
-    !body.description &&
-    !body.status &&
-    !body.urgency &&
-    !body.reportByUser
+    // !body.domainId &&
+    // !body.domainNameEng &&
+    // !body.domainNameHeb &&
+    // !body.spaceTypeId &&
+    // !body.spaceTypeNameEng &&
+    // !body.spaceTypeNameHeb &&
+    // !body.buildingId &&
+    // !body.buildingName &&
+    // !body.spaceNumber &&
+    // !body.spaceName &&
+    // !body.description &&
+    // !body.status &&
+    body.urgency
+    //  &&
+    // !body.reportByUser
   ) {
+    return;
+  } else {
     throw next(new BadRequestError("details to update"));
   }
 };
