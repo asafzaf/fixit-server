@@ -19,7 +19,10 @@ exports.getAllBuildings = catchAsync(async (req, res, next) => {
   });
 });
 exports.getBuilding = catchAsync(async (req, res, next) => {
-  if (!idIsValid(req.params.id)) {
+  if (
+    !req.params.id ||
+    req.params.id.length !== 24
+  ) {
     return next(new BadRequestError("id"));
   }
   const building = await buildingRepository.retrieve(req.params.id);
@@ -33,4 +36,3 @@ exports.getBuilding = catchAsync(async (req, res, next) => {
     },
   });
 });
-
