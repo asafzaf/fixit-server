@@ -3,7 +3,7 @@ const app = require("../app/app");
 const spaceTypeRepository = require("../repositories/spaceType.repository");
 const { NotFoundError, BadRequestError } = require("../errors/errors");
 
-jest.mock("../repositories/user.repository");
+jest.mock("../repositories/spaceType.repository");
 
 // GET all space types
 describe("GET /api/v1/space-type/", () => {
