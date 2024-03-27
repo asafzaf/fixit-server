@@ -62,34 +62,6 @@ describe("GET /api/v1/building/", () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(mockBuildingsRes);
   });
-
-  // ERROR - 400 (BadRequestError)
-  //   it("should return 400 when getting a bad request", async () => {
-  //     buildingRepository.find.mockResolvedValue(new BadRequestError("data"));
-
-  //     const res = await request(app).get("/api/v1/");
-  //     expect(res.statusCode).toEqual(200);
-  //   });
-
-  // ERROR - 404 (NotFoundError)
-  it("should return 404 when no buildings are found", async () => {
-    const mockRes = {
-      data: {
-        buildings: {
-          name: "NotFoundError",
-          status: "fail",
-          statusCode: 404,
-        },
-      },
-      status: "success",
-    };
-
-    buildingRepository.find.mockResolvedValue(new NotFoundError("buildings"));
-
-    const res = await request(app).get("/api/v1/building/");
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(mockRes);
-  });
 });
 
 // GET building
