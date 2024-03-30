@@ -1,9 +1,9 @@
 class ServerError extends Error {
   constructor(action) {
-    super(`Internal Server Error - Couldn't ${action} donations.`);
+    super(`Internal Server Error - Couldn't ${action}.`);
     this.status = "fail";
     this.name = "ServerError";
-    this.message = `Internal Server Error - Couldn't ${action} donations.`;
+    this.message = `Internal Server Error - Couldn't ${action}.`;
     this.statusCode = 500;
     Error.captureStackTrace(this, this.constructor);
   }
