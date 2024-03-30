@@ -76,7 +76,7 @@ describe("GET /api/v1/fault/user/:id", () => {
         domainNameEng: "Electric",
         faultTypeId: "101",
         faultTypeNameEng: "Exposed socket",
-        reportByUser: "1",
+        reportByUser: "65de252ea3d05e2037bf355b",
       },
       {
         id: "2",
@@ -84,13 +84,13 @@ describe("GET /api/v1/fault/user/:id", () => {
         domainNameEng: "Electric",
         faultTypeId: "101",
         faultTypeNameEng: "Exposed socket",
-        reportByUser: "2",
+        reportByUser: "65de252ea3d05e2037bf355b",
       },
     ];
 
     const mockRes = {
       data: {
-        faults: mockFaults,
+        fa: mockFaults,
       },
       results: mockFaults.length,
       status: "success",
@@ -104,7 +104,7 @@ describe("GET /api/v1/fault/user/:id", () => {
   });
 
   it("should return not found error (404)", async () => {
-    const userId = "65de252ea3d05e2037bf355r";
+    const userId = "65de252ea3d05e2037bf355b";
     const mockFaults = [];
 
     const mockRes = {
@@ -114,7 +114,9 @@ describe("GET /api/v1/fault/user/:id", () => {
       stack: null,
     };
 
-    faultRepository.find.mockResolvedValue(mockFaults);
+    faultRepository.find.mockRejectedValue(
+      new NotFoundError("fault")
+    );
     const res = await request(app).get(`/api/v1/fault/user/${userId}`);
 
     expect(res.statusCode).toEqual(404);
@@ -164,7 +166,9 @@ describe("GET /api/v1/fault/:id", () => {
       message: "not found fault",
     };
 
-    faultRepository.retrieve.mockResolvedValue(mockFaults);
+    faultRepository.find.mockRejectedValue(
+      new NotFoundError("fault not found.")
+    );
     const res = await request(app).get(`/api/v1/fault/${faultId}`);
 
     expect(res.statusCode).toEqual(404);
@@ -265,39 +269,18 @@ describe("DELETE /api/v1/fault/:id", () => {
 
   // SUCCESS - 200
   it("should delete a fault", async () => {
-    const mockFault = [
-      {
-        id: "1",
-        domainId: "1",
-        domainNameEng: "Electric",
-        faultTypeId: "101",
-        faultTypeNameEng: "Exposed socket",
-        buildingNAme: "Fernik",
-        outSide: false,
-        outSideId: null,
-        outSideName: null,
-        floor: 0,
-        spaceTypeId: "1",
-        spaceTypeNameEng: "classroom",
-        spaceNumber: "202",
-        spaceName: "class 202",
-        description: "Exposed socket",
-        status: "closed",
-        urgency: 3,
-        reportByUser: "1",
-      },
-    ];
+    const userId = "65de252ea3d05e2037bf355d";
 
     const mockRes = {
       data: null,
       status: "success",
     };
 
-    faultRepository.create.mockResolvedValue(mockFault.id);
+    faultRepository.create.mockResolvedValue(null);
 
-    const res = await request(app).delete("/api/v1/fault/:id");
+    const res = await request(app).delete(`/api/v1/fault/${userId}`);
 
-    expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toEqual(204);
     expect(res.body).toEqual(mockRes);
   });
 }, 30000);
