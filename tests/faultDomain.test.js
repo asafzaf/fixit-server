@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app/app");
 const faultDomainRepository = require("../repositories/faultDomain.repository");
-const { NotFoundError, BadRequestError } = require("../errors/errors");
+const { ServerError } = require("../errors/errors");
 
 jest.mock("../repositories/faultDomain.repository");
 
@@ -91,4 +91,21 @@ describe("GET /api/v1/fault-domain/:id", () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(mockRes);
   });
-}, 30000);
+
+  it("should return 500 when an error occurs", async () => {
+    const mockRes = {
+      status: "fail",
+      message: "Internal Server Error - Couldn't getFaultDomain.",
+      name: "ServerError",
+      stack: null,
+    };
+
+    faultDomainRepository.find.mockRejectedValue(
+      new ServerError("getFaultDomain")
+    );
+
+    const res = await request(app).get("/api/v1/fault-domain");
+    expect(res.statusCode).toEqual(500);
+    expect(res.body).toEqual(mockRes);
+  });
+});

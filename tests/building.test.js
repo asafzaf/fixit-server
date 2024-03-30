@@ -1,7 +1,11 @@
 const request = require("supertest");
 const app = require("../app/app");
 const buildingRepository = require("../repositories/building.repository");
-const { NotFoundError, BadRequestError } = require("../errors/errors");
+const {
+  NotFoundError,
+  BadRequestError,
+  ServerError,
+} = require("../errors/errors");
 
 jest.mock("../repositories/building.repository");
 
@@ -75,6 +79,23 @@ describe("GET /api/v1/building/", () => {
 
     const res = await request(app).get("/api/v1/building");
     expect(res.statusCode).toEqual(404);
+    expect(res.body).toEqual(mockRes);
+  });
+
+  it("should return 500 when an error occurs", async () => {
+    const mockRes = {
+      status: "fail",
+      message: "Internal Server Error - Couldn't getAllBuildings.",
+      name: "ServerError",
+      stack: null,
+    };
+
+    buildingRepository.find.mockRejectedValue(
+      new ServerError("getAllBuildings")
+    );
+
+    const res = await request(app).get("/api/v1/building");
+    expect(res.statusCode).toEqual(500);
     expect(res.body).toEqual(mockRes);
   });
 });
@@ -153,6 +174,23 @@ describe("GET /api/v1/building/:id", () => {
 
     const res = await request(app).get(`/api/v1/building/${mockBuildingId}`);
     expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual(mockRes);
+  });
+
+  it("should return 500 when an error occurs", async () => {
+    const mockRes = {
+      status: "fail",
+      message: "Internal Server Error - Couldn't getBuilding.",
+      name: "ServerError",
+      stack: null,
+    };
+
+    buildingRepository.find.mockRejectedValue(
+      new ServerError("getBuilding")
+    );
+
+    const res = await request(app).get("/api/v1/building");
+    expect(res.statusCode).toEqual(500);
     expect(res.body).toEqual(mockRes);
   });
 });

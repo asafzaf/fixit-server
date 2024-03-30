@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app/app");
 const outsideRepository = require("../repositories/outside.repository");
-const { NotFoundError, BadRequestError } = require("../errors/errors");
+const { ServerError } = require("../errors/errors");
 
 jest.mock("../repositories/outside.repository");
 
@@ -39,4 +39,21 @@ describe("GET /api/v1/outside/", () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(mockRes);
   });
-}, 30000);
+
+  it("should return 500 when an error occurs", async () => {
+    const mockRes = {
+      status: "fail",
+      message: "Internal Server Error - Couldn't getOutsides.",
+      name: "ServerError",
+      stack: null,
+    };
+
+    outsideRepository.find.mockRejectedValue(
+      new ServerError("getOutsides")
+    );
+
+    const res = await request(app).get("/api/v1/outside");
+    expect(res.statusCode).toEqual(500);
+    expect(res.body).toEqual(mockRes);
+  });
+});

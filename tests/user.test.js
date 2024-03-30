@@ -11,6 +11,7 @@ describe("GET /api/v1/user/", () => {
 
   // SUCCESS - 200
   it("should return all users", async () => {
+
     const mockUsers = [
       {
         id: "65de252ea3d05e2037bf355c",
@@ -42,4 +43,44 @@ describe("GET /api/v1/user/", () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(mockRes);
   });
-}, 30000);
+});
+
+describe("GET /api/v1/user/:id", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  // SUCCESS - 200
+  it("should return a user", async () => {
+    const mockUser = {
+      id: "65de252ea3d05e2037bf355c",
+      name: "Asaf",
+      email: "asaf@asaf.com",
+      isMaintenace: true,
+    };
+
+    const mockRes = {
+      data: {
+        user: mockUser,
+      },
+      status: "success",
+    };
+
+    userRepository.retrieve.mockResolvedValue(mockUser);
+
+    const res = await request(app).get("/api/v1/user/65de252ea3d05e2037bf355c");
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual(mockRes);
+  });
+
+  it("should return 404 when user not found", async () => {
+    userRepository.retrieve.mockResolvedValue(null);
+
+    const res = await request(app).get("/api/v1/user/65de252ea3d05e2037bf355c");
+    expect(res.statusCode).toEqual(404);
+
+  });
+
+  it("should return 400 when user id is invalid", async () => {
+    const res = await request(app).get("/api/v1/user/123");
+    expect(res.statusCode).toEqual(400);
+  });
+});
