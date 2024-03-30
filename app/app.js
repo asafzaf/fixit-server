@@ -3,11 +3,7 @@ const globalErrorHandler = require("../controllers/error.controller");
 const mainRouter = require("../routers/main.router");
 require("../utils/cloudinary");
 const logger = require("morgan");
-const {
-  BadRequestError,
-  ServerError,
-  NotFoundError,
-} = require("../errors/errors");
+const { NotFoundError } = require("../errors/errors");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -47,6 +43,3 @@ process.on("uncaughtException", (err) => {
 });
 
 module.exports = app;
-
-
-// fake comment to test git push

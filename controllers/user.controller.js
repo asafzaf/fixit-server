@@ -68,7 +68,6 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 const idIsValid = (id) => {
   if (
     !id ||
-    // !id.match(/^[0-9a-fA-F]{24}$/) ||
     id.length !== 24 ||
     id === "undefined" ||
     id === "null" ||

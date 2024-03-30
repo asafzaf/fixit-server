@@ -24,7 +24,6 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Please confirm your password"],
     validate: {
-      // This only works on CREATE and SAVE!!!
       validator: function (el) {
         return el === this.password;
       },
@@ -32,7 +31,7 @@ const userSchema = new Schema({
     },
   },
   passwordChangedAt: Date,
-  isMaintenace: { // remove
+  isMaintenace: {
     type: Boolean,
     default: false,
   },

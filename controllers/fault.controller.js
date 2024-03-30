@@ -37,7 +37,6 @@ exports.uploadFaultPhoto = upload.single("photo");
 //get photos
 exports.getFaultPhoto = (req, res, next) => {
   const imageName = req.params.imageName;
-  console.log(imageName);
   const path = `public/img/faults/${imageName}`;
   if (!fs.existsSync(path)) {
     return next(new NotFoundError("photo"));
@@ -123,17 +122,11 @@ exports.getFaultById = catchAsync(async (req, res, next) => {
 
 // create fault
 exports.createFault = catchAsync(async (req, res, next) => {
-  // console.log(req.file);
   if (req.file) {
-    // req.body.photo = req.file.filename;
     req.body.photo = await uploadCloud(req.file.filename);
   }
-  // console.log(req.body);
   await bodyValidation(req.body, next);
-  // console.log("pass validation");
   const fault = await faultRepository.create(req.body);
-  // console.log("fault created");
-  // console.log(fault.photo);
   return res.status(201).json({
     status: "success",
     data: {
@@ -158,7 +151,6 @@ exports.updateFault = catchAsync(async (req, res, next) => {
       fault: updatedFault,
     },
   });
-  //comment
 });
 
 // delete fault by id
@@ -202,24 +194,7 @@ exports.getAllFaultsByBuildingId = catchAsync(async (req, res, next) => {
 });
 
 const updateBodyValidation = (body, next) => {
-  console.log("body validation:", body);
-  if (
-    // !body.domainId &&
-    // !body.domainNameEng &&
-    // !body.domainNameHeb &&
-    // !body.spaceTypeId &&
-    // !body.spaceTypeNameEng &&
-    // !body.spaceTypeNameHeb &&
-    // !body.buildingId &&
-    // !body.buildingName &&
-    // !body.spaceNumber &&
-    // !body.spaceName &&
-    // !body.description &&
-    // !body.status &&
-    body.urgency
-    //  &&
-    // !body.reportByUser
-  ) {
+  if (body.urgency) {
     return;
   } else {
     throw next(new BadRequestError("details to update"));
@@ -233,14 +208,8 @@ const bodyValidation = (body, next) => {
     !body.domainId ||
     !body.domainNameEng ||
     !body.domainNameHeb ||
-    // !body.spaceTypeId ||
     !body.spaceTypeNameEng ||
-    // !body.spaceTypeNameHeb ||
-    // !body.buildingId ||
-    // !body.buildingName ||
-    // !body.spaceNumber ||
     !body.spaceName ||
-    // !body.description ||
     !body.urgency ||
     !body.reportByUser
   ) {

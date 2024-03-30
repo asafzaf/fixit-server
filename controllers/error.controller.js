@@ -45,8 +45,10 @@ const sendErrorDev = (err, res) => {
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
-  //   err.message = err.message || "Internal Server Error";
-  if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+  if (
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "test"
+  ) {
     let error = { ...err };
     error.message = err.message;
     if (err.name === "CastError") {
